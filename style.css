@@ -218,7 +218,9 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
 .game-grid {
     display: grid;
@@ -239,9 +241,16 @@ body {
     transition: transform 0.2s, background 0.2s;
 }
 
-.game-card:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.15); }
+.game-card:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+}
 
-.game-card span { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+.game-card span {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 5px;
+}
 
 /* Mobile Controls */
 #mobile-controls {
@@ -289,8 +298,13 @@ body {
 
 /* Animations */
 @keyframes portalPulse {
-    0% { filter: drop-shadow(0 0 5px var(--secondary)); }
-    100% { filter: drop-shadow(0 0 20px var(--primary)); }
+    0% {
+        filter: drop-shadow(0 0 5px var(--secondary));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 20px var(--primary));
+    }
 }
 
 /* Main Menu Styles */
@@ -330,7 +344,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 70% 30%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+    background: radial-gradient(circle at 70% 30%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
 }
 
 .menu-sidebar {
@@ -401,8 +415,15 @@ nav {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-section h1 {
