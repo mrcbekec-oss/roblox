@@ -337,6 +337,7 @@ export class LevelManager {
                 document.getElementById('player-coins').innerText = coins;
             }
         };
+        this.engine.addEntity(ent);
     }
 
     die() {
