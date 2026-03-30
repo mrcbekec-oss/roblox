@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mega Roblox Hub - 50 Games!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Game Canvas -->
+    <div id="game-container"></div>
+
+    <!-- UI Overlays -->
+    <div id="ui-layer">
+        <!-- Top HUD -->
+        <div class="hud-top">
+            <div class="player-stats">
+                <div class="stat-badge">
+                    <span class="icon">🪙</span>
+                    <span id="player-coins">0</span>
+                </div>
+                <div class="stat-badge">
+                    <span class="icon">🏆</span>
+                    <span id="player-wins">0/50</span>
+                </div>
+            </div>
+            <div class="game-info">
+                <h1 id="current-zone">Main Lobby</h1>
+            </div>
+            <div class="menu-buttons">
+                <button id="btn-shop" class="icon-btn">🛒</button>
+                <button id="btn-menu" class="icon-btn">⚙️</button>
+            </div>
+        </div>
+
+        <!-- Chat System -->
+        <div id="chat-container">
+            <div id="chat-messages"></div>
+            <div class="chat-input-row">
+                <input type="text" id="chat-input" placeholder="Say something...">
+                <button id="btn-chat-send">Send</button>
+            </div>
+        </div>
+
+        <!-- Mobile Controls (Hidden on Desktop) -->
+        <div id="mobile-controls">
+            <div id="joystick-base">
+                <div id="joystick-thumb"></div>
+            </div>
+            <button id="btn-jump" class="action-btn">JUMP</button>
+        </div>
+
+        <!-- Portals / Game List (Hidden by default) -->
+        <div id="game-list-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Game Library</h2>
+                <div class="game-grid" id="game-grid">
+                    <!-- 50 game icons will be injected here -->
+                </div>
+                <button class="btn-close" onclick="document.getElementById('game-list-modal').classList.add('hidden')">Close</button>
+            </div>
+        </div>
+
+        <!-- Death/Victory Screen -->
+        <div id="overlay-screen" class="overlay hidden">
+            <h1 id="overlay-title">Game Over</h1>
+            <p id="overlay-msg">Try again!</p>
+            <button id="btn-respawn" class="btn-primary">Back to Lobby</button>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <h1>LOADING...</h1>
+            <div class="loading-bar"><div id="progress"></div></div>
+            <p>Gathering 50 games for you...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

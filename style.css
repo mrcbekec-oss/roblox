@@ -1,0 +1,322 @@
+:root {
+    --primary: #FF4D4D;
+    --secondary: #4D96FF;
+    --accent: #FFD930;
+    --bg-glass: rgba(255, 255, 255, 0.15);
+    --bg-glass-dark: rgba(0, 0, 0, 0.4);
+    --text: #ffffff;
+    --font: 'Outfit', sans-serif;
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+body {
+    background-color: #111;
+    color: var(--text);
+    font-family: var(--font);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Canvas & Containers */
+#game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#ui-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Top HUD */
+.hud-top {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.player-stats {
+    display: flex;
+    gap: 15px;
+}
+
+.stat-badge {
+    background: var(--bg-glass-dark);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow);
+}
+
+.stat-badge .icon {
+    font-size: 1.2rem;
+}
+
+.game-info h1 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.icon-btn {
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Chat System */
+#chat-container {
+    position: absolute;
+    left: 20px;
+    bottom: 200px;
+    width: 300px;
+    height: 200px;
+    background: var(--bg-glass-dark);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    padding-right: 5px;
+}
+
+.chat-msg {
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.chat-msg .name {
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 5px;
+}
+
+.chat-input-row {
+    display: flex;
+    gap: 5px;
+}
+
+#chat-input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+#btn-chat-send {
+    background: var(--secondary);
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Loading Screen */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, #222, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.5s ease-out;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    transition: width 0.3s ease;
+}
+
+/* Modal and Grid */
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background: var(--bg-glass-dark);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 30px;
+    pointer-events: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hidden { display: none; }
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.game-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.game-card:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.15); }
+
+.game-card span { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+
+/* Mobile Controls */
+#mobile-controls {
+    display: flex;
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    right: 40px;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+}
+
+#joystick-base {
+    width: 120px;
+    height: 120px;
+    background: var(--bg-glass-dark);
+    border-radius: 50%;
+    position: relative;
+    pointer-events: auto;
+}
+
+#joystick-thumb {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.action-btn {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-glass-dark);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* Animations */
+@keyframes portalPulse {
+    0% { filter: drop-shadow(0 0 5px var(--secondary)); }
+    100% { filter: drop-shadow(0 0 20px var(--primary)); }
+}
+
+/* Common Utils */
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    pointer-events: auto;
+    z-index: 200;
+}
