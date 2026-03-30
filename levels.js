@@ -53,7 +53,10 @@ export class LevelManager {
     }
 
     loadLobby() {
-        this.engine.clearScene();
+        this.engine.clearScene([this.engine.player]);
+        
+        // Ensure player mesh is in scene
+        this.engine.scene.add(this.engine.player.mesh);
         
         // Ground
         const floorGeo = new THREE.PlaneGeometry(100, 100);
@@ -147,7 +150,9 @@ export class LevelManager {
         const level = this.levels.find(l => l.id === id);
         if (!level) return;
 
-        this.engine.clearScene();
+        this.engine.clearScene([this.engine.player]);
+        // Ensure player mesh is in scene
+        this.engine.scene.add(this.engine.player.mesh);
         this.currentLevel = level;
         document.getElementById('current-zone').innerText = level.name;
 
@@ -314,7 +319,7 @@ export class LevelManager {
             const dir = this.engine.player.position.clone().sub(bot.position).normalize();
             bot.position.add(dir.multiplyScalar(delta * 4));
             if (bot.position.distanceTo(this.engine.player.position) < 1.5) {
-                this.engine.player.position.set(0, 10, 0); // Reset player
+                this.die();
             }
         };
         this.engine.addEntity(ent);
@@ -332,6 +337,17 @@ export class LevelManager {
                 document.getElementById('player-coins').innerText = coins;
             }
         };
-        this.engine.addEntity(ent);
+    }
+
+    die() {
+        const overlay = document.getElementById('overlay-screen');
+        document.getElementById('overlay-title').innerText = "GAME OVER";
+        document.getElementById('overlay-msg').innerText = "Watch out for hazards!";
+        overlay.classList.remove('hidden');
+        
+        document.getElementById('btn-respawn').onclick = () => {
+            overlay.classList.add('hidden');
+            this.loadLobby();
+        };
     }
 }

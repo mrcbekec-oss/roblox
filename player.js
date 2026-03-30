@@ -47,6 +47,10 @@ export class Player extends Entity {
 
         this.initControls();
         this.cameraOffset = new THREE.Vector3(0, 5, 10);
+        
+        // Initial Camera Position
+        this.engine.camera.position.copy(this.position.clone().add(this.cameraOffset));
+        this.engine.camera.lookAt(this.position.clone().add(new THREE.Vector3(0, 1, 0)));
     }
 
     initControls() {
@@ -94,10 +98,20 @@ export class Player extends Entity {
         // Apply Velocity with Simple Axis-Wise Collision
         const nextPos = this.position.clone().add(this.velocity.clone().multiplyScalar(delta));
 
-        // Y Collision
+        // Y Collision / Death
         this.position.y = nextPos.y;
         this.onGround = false;
-        if (this.position.y < 0) {
+        
+        if (this.position.y < -10) {
+            if (window.game && window.game.levelManager) {
+                window.game.levelManager.die();
+            } else {
+                this.position.set(0, 5, 0); // Fallback
+                this.velocity.set(0, 0, 0);
+            }
+        }
+
+        if (this.position.y < 0 && (!window.game || !window.game.levelManager || window.game.levelManager.currentLevel === null)) {
             this.position.y = 0;
             this.velocity.y = 0;
             this.onGround = true;

@@ -62,11 +62,13 @@ export class Engine {
         if (cidx > -1) this.colliders.splice(cidx, 1);
     }
 
-    clearScene() {
+    clearScene(exclude = []) {
         this.entities.forEach(e => {
-            if (e.mesh) this.scene.remove(e.mesh);
+            if (!exclude.includes(e)) {
+                if (e.mesh) this.scene.remove(e.mesh);
+            }
         });
-        this.entities = [];
+        this.entities = this.entities.filter(e => exclude.includes(e));
         this.colliders = [];
     }
 
