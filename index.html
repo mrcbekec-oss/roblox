@@ -10,6 +10,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <h1>LOADING...</h1>
+            <div class="loading-bar"><div id="progress"></div></div>
+            <p>Gathering 50 games for you...</p>
+        </div>
+    </div>
+
+    <!-- Main Menu Overlay -->
+    <div id="main-menu">
+        <div class="menu-bg-wrapper">
+            <img id="menu-bg-img" src="roblox_menu_bg_1774858590585.png" alt="">
+            <div class="menu-overlay-tint"></div>
+        </div>
+
+        <div class="menu-sidebar">
+            <div class="logo">MEGA<br>HUB</div>
+            <nav>
+                <button class="nav-btn active" data-tab="home">🏠 Home</button>
+                <button class="nav-btn" data-tab="discover">🎮 Discover</button>
+                <button class="nav-btn" data-tab="avatar">👕 Avatar</button>
+            </nav>
+        </div>
+
+        <div class="menu-content">
+            <div id="tab-home" class="tab-pane active">
+                <div class="hero-section">
+                    <h1>Welcome back, <span id="user-display-name">Player</span></h1>
+                    <p>Continue your adventure in 50+ unique worlds.</p>
+                    <button id="btn-play-now" class="btn-mega-play">PLAY</button>
+                </div>
+                <div class="recomended-row">
+                    <h3>Featured Games</h3>
+                    <div id="featured-grid" class="horizontal-scroll">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-discover" class="tab-pane">
+                <h2>Browse All 50 Games</h2>
+                <div class="discover-grid" id="menu-game-grid"></div>
+            </div>
+
+            <div id="tab-avatar" class="tab-pane">
+                <h2>Customize Your Avatar</h2>
+                <div class="avatar-controls">
+                    <div class="preview-box">
+                         <!-- Character preview logic -->
+                    </div>
+                    <div class="color-picker">
+                        <h3>Body Color</h3>
+                        <div class="swatches">
+                            <div class="swatch" data-color="#4D96FF" style="background:#4D96FF"></div>
+                            <div class="swatch" data-color="#FF4D4D" style="background:#FF4D4D"></div>
+                            <div class="swatch" data-color="#FFD930" style="background:#FFD930"></div>
+                            <div class="swatch" data-color="#4BFF4B" style="background:#4BFF4B"></div>
+                            <div class="swatch" data-color="#FF4DFF" style="background:#FF4DFF"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Game Canvas -->
     <div id="game-container"></div>
 

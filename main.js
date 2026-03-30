@@ -33,26 +33,95 @@ class GameApp {
     }
 
     initUI() {
+        // Main Menu - Tabs
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        
+        navBtns.forEach(btn => {
+            btn.onclick = () => {
+                navBtns.forEach(b => b.classList.remove('active'));
+                tabPanes.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+                
+                if (btn.dataset.tab === 'discover') this.populateMenuGrid();
+            };
+        });
+
+        // Main Menu - Play Button
+        document.getElementById('btn-play-now').onclick = () => {
+            document.getElementById('main-menu').classList.add('hidden-menu');
+            this.levelManager.loadLobby();
+        };
+
+        // Avatar - Color Pickers
+        const swatches = document.querySelectorAll('.swatch');
+        swatches.forEach(s => {
+            s.onclick = () => {
+                swatches.forEach(sw => sw.classList.remove('selected'));
+                s.classList.add('selected');
+                const color = s.dataset.color;
+                // Update player avatar color
+                this.player.mesh.children[0].material.color.set(color); // Body
+                this.player.mesh.children[2].material.color.set(color); // Larm
+                this.player.mesh.children[3].material.color.set(color); // Rarm
+            };
+        });
+
         // Respawn / Reset
         document.getElementById('btn-respawn').onclick = () => {
              document.getElementById('overlay-screen').classList.add('hidden');
              this.levelManager.loadLobby();
         };
 
-        // Open Game Library directly
+        // HUD - Open Menu (Back to Menu)
         document.getElementById('btn-menu').onclick = () => {
-            this.levelManager.showGameList('obby speed combat tycoon');
+            document.getElementById('main-menu').classList.remove('hidden-menu');
         };
 
-        // Shop button (Simple cosmetic change for now)
+        // Shop button
         document.getElementById('btn-shop').onclick = () => {
              const coins = parseInt(document.getElementById('player-coins').innerText);
              if (coins >= 100) {
-                 alert("You bought a Gold Skin! (Visual only for now)");
+                 alert("You bought a Gold Skin!");
+                 this.player.mesh.children[0].material.color.set(0xDAA520);
              } else {
                  alert("You need 100 coins for a Gold Skin!");
              }
         };
+
+        this.populateFeatured();
+    }
+
+    populateFeatured() {
+        const grid = document.getElementById('featured-grid');
+        grid.innerHTML = '';
+        const featured = this.levelManager.levels.slice(0, 10);
+        featured.forEach(level => {
+            const item = document.createElement('div');
+            item.className = 'game-thumb';
+            item.innerHTML = `<span>🎮</span><b>${level.name}</b>`;
+            item.onclick = () => {
+                document.getElementById('main-menu').classList.add('hidden-menu');
+                this.levelManager.loadLevel(level.id);
+            };
+            grid.appendChild(item);
+        });
+    }
+
+    populateMenuGrid() {
+        const grid = document.getElementById('menu-game-grid');
+        grid.innerHTML = '';
+        this.levelManager.levels.forEach(level => {
+            const item = document.createElement('div');
+            item.className = 'game-thumb';
+            item.innerHTML = `<span>🎮</span><b>${level.name}</b><br><small>${level.type.toUpperCase()}</small>`;
+            item.onclick = () => {
+                document.getElementById('main-menu').classList.add('hidden-menu');
+                this.levelManager.loadLevel(level.id);
+            };
+            grid.appendChild(item);
+        });
     }
 
     initJoystick() {
